@@ -18,10 +18,11 @@ export const handler = async (event: Event, context: Context) => {
 
   try {
     const response = await axios.post(
-      "https://api.openai.com/v1/engines/davinci-codex/completions",
+      "https://api.openai.com/v1/completions",
       {
         prompt,
-        max_tokens: 100,
+        model:"text-davinci-003",
+        max_tokens: 3000,
         n: 1,
         stop: null,
         temperature: 0.7,
