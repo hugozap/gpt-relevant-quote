@@ -19,6 +19,7 @@ const getPrompt = (inputText: string) => {
   ===END===
   Please use the following format for each quote (one quote per line):
   Author Name #### Quote
+
   For example:
   Albert Einstein #### Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.
 
@@ -52,6 +53,8 @@ export const handler = async (event: Event, context: Context) => {
         },
       }
     );
+
+    console.log(response.data);
 
     return {
       statusCode: 200,
