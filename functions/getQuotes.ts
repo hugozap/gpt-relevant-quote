@@ -17,6 +17,7 @@ const getPrompt = (inputText: string) => {
   ===START===
   ${inputText}
   ===END===
+  For the quotes please use the same language as the input text.
   Please use the following format for each quote (one quote per line):
   Author Name #### Quote
 
