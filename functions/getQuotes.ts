@@ -9,6 +9,23 @@ interface Event {
 
 interface Context {}
 
+const getPrompt = (inputText: string) => {
+
+  const prompt = `
+  Please return a list of 10 quotes from well known and respected authors.
+  The quotes should be relevant to the following situation:
+  ===START===
+  ${inputText}
+  ===END===
+  Please use the following format for each quote (one quote per line):
+  Author Name #### Quote
+  For example:
+  Albert Einstein #### Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.
+
+  Quotes:
+  `;
+}
+
 export const handler = async (event: Event, context: Context) => {
   if (event.httpMethod !== "POST") {
     return { statusCode: 405, body: "Method Not Allowed" };
