@@ -92,6 +92,21 @@
         font-weight: bold;
         margin-bottom: 5px;
       }
+
+      .fade-in {
+        opacity: 0;
+        animation: fadeIn ease 1s;
+        animation-fill-mode: forwards;
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
     </style>
   </head>
   <body>
@@ -131,22 +146,30 @@
             const quotesList = document.getElementById("quotesList");
             quotesList.innerHTML = "";
 
-            for (const quoteLine of quotes) {
-              const [author, quote] = quoteLine.split("####");
-              const li = document.createElement("li");
-              li.classList.add("quote");
+            const displayQuote = (quoteLine, delay) => {
+              setTimeout(() => {
+                const [author, quote] = quoteLine.split("####");
+                const li = document.createElement("li");
+                li.classList.add("quote");
+                li.classList.add("fade-in"); // Add the fade-in class to animate the quote
 
-              const authorEl = document.createElement("div");
-              authorEl.classList.add("author");
-              authorEl.textContent = author;
-              li.appendChild(authorEl);
+                const authorEl = document.createElement("div");
+                authorEl.classList.add("author");
+                authorEl.textContent = author;
+                li.appendChild(authorEl);
 
-              const quoteEl = document.createElement("div");
-              quoteEl.textContent = quote;
-              li.appendChild(quoteEl);
+                const quoteEl = document.createElement("div");
+                quoteEl.textContent = quote;
+                li.appendChild(quoteEl);
 
-              quotesList.appendChild(li);
-            }
+                quotesList.appendChild(li);
+              }, delay);
+            };
+
+            // Display quotes in a sequence with a delay
+            quotes.forEach((quote, index) => {
+              displayQuote(quote, index * 1000); // Adjust the delay time as needed
+            });
           } else {
             alert(
               "An error occurred while fetching quotes. Please try again later."
