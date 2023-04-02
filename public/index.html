@@ -107,46 +107,6 @@
           opacity: 1;
         }
       }
-
-      /* New card styles */
-      .quote-container {
-        perspective: 1000px;
-      }
-
-      .quote-card {
-        width: 80%;
-        max-width: 400px;
-        height: 200px;
-        position: relative;
-        transform-style: preserve-3d;
-        transform-origin: center right;
-        transition: transform 1s;
-      }
-
-      .quote-card.flipped {
-        transform: translateX(-100%) rotateY(-180deg);
-      }
-
-      .quote-card .quote {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        backface-visibility: hidden;
-      }
-
-      .quote-card .quote:nth-child(2) {
-        transform: rotateY(180deg);
-      }
-
-      /* New animation styles */
-      @keyframes fadeIn {
-        0% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 1;
-        }
-      }
     </style>
   </head>
   <body>
@@ -160,45 +120,7 @@
     </form>
     <div class="loader" id="loader"></div>
     <ul class="quotes" id="quotesList"></ul>
-
-    <div class="quote-container" id="quoteContainer">
-      <div class="quote-card" id="quoteCard">
-        <div class="quote"></div>
-        <div class="quote"></div>
-      </div>
-    </div>
-
     <script>
-      const quoteContainer = document.getElementById("quoteContainer");
-      const quoteCard = document.getElementById("quoteCard");
-
-      const displayQuote = (quoteLine) => {
-        const [author, quoteText] = quoteLine.split("####");
-        const quoteEl = quoteCard.querySelector(".quote:not(.flipped)");
-
-        const authorEl = document.createElement("div");
-        authorEl.classList.add("author");
-        authorEl.textContent = author;
-        quoteEl.appendChild(authorEl);
-
-        const quoteContent = document.createElement("div");
-        quoteContent.textContent = quoteText;
-        quoteEl.appendChild(quoteContent);
-
-        quoteCard.classList.add("flipped");
-        setTimeout(() => {
-          quoteCard.removeChild(quoteCard.querySelector(".quote.flipped"));
-          quoteCard.classList.remove("flipped");
-        }, 1000);
-      };
-
-      const displayQuotes = async (quotes) => {
-        for (const quote of quotes) {
-          displayQuote(quote);
-          await new Promise((resolve) => setTimeout(resolve, 2000));
-        }
-      };
-
       document
         .getElementById("quoteForm")
         .addEventListener("submit", async (event) => {
@@ -221,9 +143,33 @@
           if (response.ok) {
             const data = await response.json();
             const quotes = data.quote.split("\n");
-            quoteContainer.style.display = "block";
-            await displayQuotes(quotes);
-            quoteContainer.style.display = "none";
+            const quotesList = document.getElementById("quotesList");
+            quotesList.innerHTML = "";
+
+            const displayQuote = (quoteLine, delay) => {
+              setTimeout(() => {
+                const [author, quote] = quoteLine.split("####");
+                const li = document.createElement("li");
+                li.classList.add("quote");
+                li.classList.add("fade-in"); // Add the fade-in class to animate the quote
+
+                const authorEl = document.createElement("div");
+                authorEl.classList.add("author");
+                authorEl.textContent = author;
+                li.appendChild(authorEl);
+
+                const quoteEl = document.createElement("div");
+                quoteEl.textContent = quote;
+                li.appendChild(quoteEl);
+
+                quotesList.appendChild(li);
+              }, delay);
+            };
+
+            // Display quotes in a sequence with a delay
+            quotes.forEach((quote, index) => {
+              displayQuote(quote, index * 1000); // Adjust the delay time as needed
+            });
           } else {
             alert(
               "An error occurred while fetching quotes. Please try again later."
