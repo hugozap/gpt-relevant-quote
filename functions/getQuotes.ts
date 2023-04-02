@@ -25,6 +25,7 @@ const getPrompt = (inputText: string) => {
 
   Quotes:
   `;
+  return prompt;
 }
 
 export const handler = async (event: Event, context: Context) => {
