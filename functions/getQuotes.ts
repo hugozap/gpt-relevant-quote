@@ -32,12 +32,13 @@ export const handler = async (event: Event, context: Context) => {
   }
 
   const { prompt } = JSON.parse(event.body);
+  const finalPrompt = getPrompt(prompt);
 
   try {
     const response = await axios.post(
       "https://api.openai.com/v1/completions",
       {
-        prompt,
+        finalPrompt,
         model:"text-davinci-003",
         max_tokens: 3000,
         n: 1,
