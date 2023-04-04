@@ -1,6 +1,9 @@
 # Relevant Quotes (GPT)
+A sample app that returns relevant quotes for the input text.
 
-This is a simple example of using the OpenAI completions models and can be adapted to create quick proof of concepts.
+Demo: https://relevant-quotes.netlify.app/
+
+This project can be used as a starter template to quickly test and deploy GPT based apps.
 
 # Build and deploy
 
