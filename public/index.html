@@ -98,6 +98,12 @@
         animation: fadeIn ease 1s;
         animation-fill-mode: forwards;
       }
+      
+      .warning{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
 
       @keyframes fadeIn {
         0% {
@@ -118,6 +124,10 @@
       ></textarea>
       <button type="submit">Get Quotes</button>
     </form>
+    <div class="warning">
+      Results may contain innacurate information like incorrect quote attribution or non existent quotes (It's just a toy!).
+      <p>Source code available <a href="https://github.com/hugozap/gpt-relevant-quote/">here</a></p>
+    </div>
     <div class="loader" id="loader"></div>
     <ul class="quotes" id="quotesList"></ul>
     <script>
